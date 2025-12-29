@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="101-insert-users" author="Nurym">
+        <insert tableName="users">
+            <column name="email" value="admin@f1academy.com"/>
+            <column name="password" value="$2a$10$encodedAdminPassword"/>
+            <column name="first_name" value="Lewis"/>
+            <column name="last_name" value="Hamilton"/>
+            <column name="role" value="ADMIN"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="email" value="manager@f1academy.com"/>
+            <column name="password" value="$2a$10$encodedManagerPassword"/>
+            <column name="first_name" value="Christian"/>
+            <column name="last_name" value="Horner"/>
+            <column name="role" value="MANAGER"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="email" value="student@f1academy.com"/>
+            <column name="password" value="$2a$10$encodedStudentPassword"/>
+            <column name="first_name" value="Max"/>
+            <column name="last_name" value="Verstappen"/>
+            <column name="role" value="STUDENT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="102-insert-teams" author="Nurym">
+        <insert tableName="teams">
+            <column name="name" value="Red Bull Racing Academy"/>
+            <column name="country" value="Austria"/>
+            <column name="description" value="Junior development program for future F1 drivers"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="manager_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="teams">
+            <column name="name" value="Ferrari Driver Academy"/>
+            <column name="country" value="Italy"/>
+            <column name="description" value="Official Ferrari motorsport education academy"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="manager_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="teams">
+            <column name="name" value="Mercedes Junior Program"/>
+            <column name="country" value="Germany"/>
+            <column name="description" value="High-performance driver training program"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="manager_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="103-insert-courses" author="nurym">
+        <insert tableName="courses">
+            <column name="title" value="F1 Race Strategy Fundamentals"/>
+            <column name="description" value="Learn how race strategies are built and adjusted"/>
+            <column name="price" valueNumeric="499.99"/>
+            <column name="level" value="BEGINNER"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="team_id" valueNumeric="1"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="courses">
+            <column name="title" value="Advanced Aerodynamics in Formula 1"/>
+            <column name="description" value="Deep dive into airflow, downforce and drag"/>
+            <column name="price" valueNumeric="899.99"/>
+            <column name="level" value="ADVANCED"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="team_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="courses">
+            <column name="title" value="Data Analysis for F1 Engineers"/>
+            <column name="description" value="Telemetry and performance data analysis"/>
+            <column name="price" valueNumeric="699.99"/>
+            <column name="level" value="INTERMEDIATE"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="team_id" valueNumeric="3"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="104-insert-enrollments" author="Nurym">
+        <insert tableName="enrollments">
+            <column name="student_id" valueNumeric="3"/>
+            <column name="course_id" valueNumeric="1"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="progress" valueNumeric="40"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="enrollments">
+            <column name="student_id" valueNumeric="3"/>
+            <column name="course_id" valueNumeric="2"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="progress" valueNumeric="100"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+            <column name="completed_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="enrollments">
+            <column name="student_id" valueNumeric="3"/>
+            <column name="course_id" valueNumeric="3"/>
+            <column name="status" value="CANCELLED"/>
+            <column name="progress" valueNumeric="10"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+            <column name="cancelled_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="105-insert-lessons" author="Nurym">
+        <insert tableName="lessons">
+            <column name="title" value="Introduction to Race Strategy"/>
+            <column name="content" value="Basics of pit stops and tire strategy"/>
+            <column name="order_number" valueNumeric="1"/>
+            <column name="duration_minutes" valueNumeric="30"/>
+            <column name="course_id" valueNumeric="1"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="lessons">
+            <column name="title" value="Understanding Downforce"/>
+            <column name="content" value="How aerodynamics affect car performance"/>
+            <column name="order_number" valueNumeric="1"/>
+            <column name="duration_minutes" valueNumeric="45"/>
+            <column name="course_id" valueNumeric="2"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+
+        <insert tableName="lessons">
+            <column name="title" value="Telemetry Basics"/>
+            <column name="content" value="Reading and interpreting F1 telemetry data"/>
+            <column name="order_number" valueNumeric="1"/>
+            <column name="duration_minutes" valueNumeric="40"/>
+            <column name="course_id" valueNumeric="3"/>
+            <column name="created_at" valueDate="NOW()"/>
+            <column name="updated_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+services:
+  main_db:
+    image: 'postgres'
+    container_name: 'main'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '2525:5432'
+  test_db:
+    image: 'postgres'
+    container_name: 'test'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '2526:5432'

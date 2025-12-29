@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="001-create-users" author="Nurym">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(100)"/>
+            <column name="last_name" type="VARCHAR(100)"/>
+
+            <column name="role" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(50)"/>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="blocked_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002-create-teams" author="Nurym">
+        <createTable tableName="teams">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="country" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="status" type="VARCHAR(50)"/>
+
+            <column name="manager_id" type="BIGINT"/>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="teams"
+                baseColumnNames="manager_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_team_manager"/>
+    </changeSet>
+
+    <changeSet id="003-create-courses" author="Nurym">
+        <createTable tableName="courses">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="price" type="NUMERIC(10,2)"/>
+
+            <column name="level" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(50)"/>
+
+            <column name="team_id" type="BIGINT"/>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="courses"
+                baseColumnNames="team_id"
+                referencedTableName="teams"
+                referencedColumnNames="id"
+                constraintName="fk_course_team"/>
+    </changeSet>
+
+    <changeSet id="004-create-enrollments" author="Nurym">
+        <createTable tableName="enrollments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="student_id" type="BIGINT"/>
+            <column name="course_id" type="BIGINT"/>
+
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="progress" type="INT"/>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="completed_at" type="TIMESTAMP"/>
+            <column name="cancelled_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="enrollments"
+                baseColumnNames="student_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_enrollment_student"/>
+
+        <addForeignKeyConstraint
+                baseTableName="enrollments"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="id"
+                constraintName="fk_enrollment_course"/>
+    </changeSet>
+
+    <changeSet id="005-create-lessons" author="Nurym">
+        <createTable tableName="lessons">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="content" type="TEXT"/>
+            <column name="order_number" type="INT"/>
+            <column name="duration_minutes" type="INT"/>
+
+            <column name="course_id" type="BIGINT"/>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="lessons"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="id"
+                constraintName="fk_lesson_course"/>
+    </changeSet>
+
+</databaseChangeLog>
